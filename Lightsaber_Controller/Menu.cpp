@@ -1,10 +1,10 @@
-#include <EEPROM.h>
 #include "Menu.h"
+#include <EEPROM.h>
 #include "Config.h"
 #include "Dfplayer.h"
 #include "Mpu6050.h"
 
-void get_config(uint8_t * numfont,uint8_t * folder,uint8_t * volume,uint8_t * lightpower){
+void get_config(uint8_t* numfont,uint8_t* folder,uint8_t* volume,uint8_t* lightpower){
 if(EEPROM[0]!= 'C'){
      EEPROM[0] = 'C';
      EEPROM[1] = 4;
@@ -38,10 +38,9 @@ void menu(uint8_t* numfont,uint8_t* folder,uint8_t* volume,uint8_t* lightpower){
      if(((*volume)%5) != 0) (*volume) = 10; // Control
      Play_Folder_Track(99,32); delay(1200);//SELECT VOLUME VOICE
      while(!next){
-       
        if((*volume)!=0){Specify_Volume((*volume));delay(100);}
        else{ Specify_Volume(5);delay(100); }
-       Play_Folder_Track(99,(*volume));delay(150);
+       Play_Folder_Track(99,(*volume));delay(200);
        GyY=0;
        while(rotation_force > abs(GyY)){
        if(digitalRead(pin_button1)){ next = true; break;}
@@ -54,7 +53,7 @@ void menu(uint8_t* numfont,uint8_t* folder,uint8_t* volume,uint8_t* lightpower){
      next = false;
      Play_Folder_Track(99,33); delay(1400);
      while(!next){
-       analogWrite(pin_light,(*lightpower)); delay(500);
+       analogWrite(pin_light,(*lightpower)); delay(300);
        GyY=0;
        while(rotation_force > abs(GyY)){
        if(digitalRead(pin_button1)){ next = true; break; digitalWrite(pin_button1,LOW); }
@@ -80,8 +79,8 @@ void menu(uint8_t* numfont,uint8_t* folder,uint8_t* volume,uint8_t* lightpower){
      }
      
 //-----------------------PUTTING CONFIG ON EEPROM-----------------------
-Play_Folder_Track(99,35); delay(10000); //SAVING
-if((*volume)==0)Specify_Volume(0);
+Play_Folder_Track(99,35);   //SAVING 
 set_config((*numfont),(*folder),(*volume),(*lightpower));
+delay(9000); 
+if((*volume)== 0)Specify_Volume(0);
 }
-

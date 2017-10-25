@@ -57,9 +57,10 @@ if(lightstate != HIGH){
         break;
         }
     }
+    delay(30); //BUTTONS REBOUND
     if(!check){
     time0 = millis();
-    while((millis()-time0) < 400){
+    while((millis()-time0) < 300){
         if (digitalRead(pin_button1) == HIGH){
            while(digitalRead(pin_button1) == HIGH){;}               //WHAITING FOR THE BUTTON TO BE RELEASED FOR THE SECOND TIME
            Play_Rand(track_voice_start,track_voice_end,folder);     //VOICE SOUND
@@ -69,6 +70,7 @@ if(lightstate != HIGH){
     }
          if(!check){
          buttonstate = LOW; lightstate = HIGH;
+         while(!(millis()%2)){;}
          Play_Folder_Track(folder,track_on);                //POWER UP SOUND 
          delay(time_on - fade_OffToOn(lightpower));         //FADE LIGHT
          Play_Folder_Track(folder,track_hum);
@@ -134,7 +136,7 @@ else{
 
 // FLICKER EFFECT
 #ifdef FLICKER
-        if(!(millis()%200))
+        if(!(millis()%10))
         Flicker(lightpower);
 #endif
 
@@ -148,19 +150,17 @@ digitalWrite(pin_cristal,HIGH);
           time0 = millis();
           Play_Rand(track_swing_start,track_swing_end,folder);
           
-          while((millis() - time0) < time_swing){
-              MPU_Get_Data(&GyX,&GyZ);
+          while((millis() - time0) < (time_swing - 8)){
               int16_t NEW_GyX=0,NEW_GyZ=0;
-              delay(time_swing/6);
               MPU_Get_Data(&NEW_GyX,&NEW_GyZ);
-              if( (abs(GyX) > clashforce || abs(GyZ) > clashforce) && (abs(NEW_GyX) > clashrebound || abs(NEW_GyZ) > clashrebound) && (((GyX ^ NEW_GyX) < 0) || ((GyZ ^ NEW_GyZ) < 0))){ 
+              if( (abs(NEW_GyX) > clashforce || abs(NEW_GyZ) > clashforce) && (((GyX ^ NEW_GyX) < 0) || ((GyZ ^ NEW_GyZ) < 0))){ 
                 Play_Rand(track_clash_start,track_clash_end,folder);
                 delay(time_clash);
                 break;
               }
             }
           Play_Folder_Track(folder,track_hum);
-          delay(100);
+          delay(150);
           Loop_Current();
           }
                 

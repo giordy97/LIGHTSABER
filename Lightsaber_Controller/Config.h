@@ -7,7 +7,7 @@
 
 //*************** PINS NUMBER: *********************
 /* IF YOU WANT FLICKER UNCOMMENT THE FOLLOWING LINE*/
-//#define FLICKER
+#define FLICKER
 //**************************************************
 
 //*************** PINS NUMBER: *********************
@@ -47,10 +47,10 @@
 
 //**************** LENGHT AUDIO FILE ****************
 /* LENGHT IS USED TO CALCULATE DELAYS FOR ARDUINO */
-#define time_on            2139         //2145
+#define time_on            2140         //2145
 #define time_off           1400
-#define time_clash         665          //673
-#define time_swing         635          //650
+#define time_clash         666          //673
+#define time_swing         634          //650
 //***************************************************
 
 //****************** BYTE FOR DFPLAYER: *************
@@ -64,7 +64,7 @@
 //******************** CONFIG FOR MPU6050 ***********
 #define MPU_addr         0x68
 #define swingforce       27000  //FORCE TO DETECT SWING
-#define clashforce       29000  //FORCE TO DETECT CLASH
-#define clashrebound     10000  //REBOUND TO DETECT CLASH
+#define clashforce       28000  //FORCE TO DETECT CLASH
+#define clashrebound     12000  //REBOUND TO DETECT CLASH
 #define rotation_force   22000  //FORCE TO SKIP IN MENU
 
