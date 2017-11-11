@@ -5,29 +5,35 @@
 /*    IF YOUR LIGHTSABER HAS TWO BUTTON COMMENT THE FOLLOWING LINE      */
 #define ONE_BUTTON
 
-//*************** PINS NUMBER: *********************
-/* IF YOU WANT FLICKER UNCOMMENT THE FOLLOWING LINE*/
-#define FLICKER
-//**************************************************
+//=================== FIRST CONFIGURATION: ===================
+//    ALL YOU ARE SETTING HERE WILL BE OVERWITTEN 
+//       BY CONFIG MENU AFTER FIRST START UP:    
+
+#define FN 1     //FONT ACTUALY  SELECTED
+#define FF 1     //NUMBER OF DIFFERENT FONTS ON YOUR SD CARD
+#define FV 20    //VOLUME: ONLY MULTIPLE OF 5 (0-30)
+#define FL 200   //LIGHTPOWER  (0-254)
+#define FK 0     //FLICKER EFFECT (1 -> YES || 0 -> NO)
+//============================================================
 
 //*************** PINS NUMBER: *********************
-//LED PIN:
-#define pin_light     10      //PIN LED STRIPE
+//MAIN LED PIN:
+#define pin_light     10      //PIN LED/LED STRIPE
 
 //CRISTAL PIN:
 #define pin_cristal   11      //PIN CRISTAL LED
 
-//---------------- BUTTONS PIN: -------------------
-//BUTTON 1:
-#define pin_button1   9      //PIN ON/OFF BUTTON
+//BUTTON 1 PIN:
+#define pin_button1   9       //MAIN BUTTON PIN
 
-//BUTTON 2:
+//BUTTON 2 PIN:
 /* IGNORE IF YOUR LIGHTSABER HAS ONLY ONE BUTTON */
 #define pin_button2   12      //PIN SECONDARY BUTTON
 //***************************************************
 
-//---------------- CRISTAL PERIOD ------------------
-#define CristalPeriod 2000    //CRISTAL PERIOD IN MILLISECONDS
+//CRISTAL PERIOD
+//TIME CRISTAL GOES LOW, HIGH, LOW.
+#define CristalPeriod 1500    //TIME IN MILLISECONDS
 
 //******************** TRACK NUMBERS: ***************
 #define track_on           1
@@ -47,10 +53,10 @@
 
 //**************** LENGHT AUDIO FILE ****************
 /* LENGHT IS USED TO CALCULATE DELAYS FOR ARDUINO */
-#define time_on            2140         //2145
+#define time_on            2125         //2145
 #define time_off           1400
-#define time_clash         666          //673
-#define time_swing         634          //650
+#define time_clash         665          //673
+#define time_swing         630          //650
 //***************************************************
 
 //****************** BYTE FOR DFPLAYER: *************
@@ -62,9 +68,9 @@
 //***************************************************
 
 //******************** CONFIG FOR MPU6050 ***********
-#define MPU_addr         0x68
-#define swingforce       27000  //FORCE TO DETECT SWING
-#define clashforce       28000  //FORCE TO DETECT CLASH
-#define clashrebound     12000  //REBOUND TO DETECT CLASH
-#define rotation_force   22000  //FORCE TO SKIP IN MENU
+#define MPU_addr            0x68
+#define swing_force     800000000  //FORCE TO DETECT SWING
+#define clash_force    1150000000  //FORCE TO DETECT CLASH
+#define rotation_force     24500   //FORCE TO SKIP IN MENU
+#define interval_clash 10
 

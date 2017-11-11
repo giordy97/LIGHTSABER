@@ -5,12 +5,11 @@
 uint8_t fade_OffToOn(uint8_t lightpower){
     uint8_t cont = 0;
     while(cont < lightpower){
-          if(!(millis()%2)){
-            analogWrite(pin_light,cont);
-            cont++;
-          }
+         analogWrite(pin_light,cont);
+         delay(2);
+         cont++;
       }
-  return cont*2;
+  return (cont*2);
 }
 
 uint16_t fade_OnToOff(uint8_t lightpower){
@@ -42,4 +41,13 @@ void Flicker(uint8_t lightpower){
 void CristalPulse(){
     analogWrite(pin_cristal,((1 + cos((millis()*3.1415926535)/CristalPeriod))/2) * 255);
   }
-  
+
+uint8_t clashFlash(uint8_t lightpower){
+  #define flash_time 30
+   analogWrite(pin_light,1);
+   delay(10);
+   analogWrite(pin_light,255); 
+   delay(flash_time); 
+   analogWrite(pin_light,lightpower);
+   return flash_time + 10;
+  }

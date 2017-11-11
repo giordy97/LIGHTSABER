@@ -13,8 +13,8 @@
 
 //GLOBAL VARIABLES
 bool buttonstate = LOW,lightstate = LOW,check = false;
-uint8_t numfont,folder,volume,lightpower;
-long long time0 = 0;
+uint8_t numfont=FN,folder=FF,volume=FV,lightpower=FL;
+uint32_t time0,GyX,GyZ,AcX,AcZ;
 
 void setup(){
 //INIZIALIZING ARDUINO
@@ -29,10 +29,12 @@ get_config(&numfont,&folder,&volume,&lightpower);
 
 //INIZIALIZING DFPLAYER
 init_DfPlayer(volume);
-Play_Folder_Track(folder,track_bootup);
 
 //INIZIALIZING MPU6050
 init_mpu6050();
+
+//SABER READY
+Play_Folder_Track(folder,track_bootup);
 }
 
 void loop(){
@@ -57,10 +59,10 @@ if(lightstate != HIGH){
         break;
         }
     }
-    delay(30); //BUTTONS REBOUND
-    if(!check){
     time0 = millis();
-    while((millis()-time0) < 300){
+    delay(35); //BUTTONS REBOUND
+    if(!check){
+    while((millis()-time0) < 250){
         if (digitalRead(pin_button1) == HIGH){
            while(digitalRead(pin_button1) == HIGH){;}               //WHAITING FOR THE BUTTON TO BE RELEASED FOR THE SECOND TIME
            Play_Rand(track_voice_start,track_voice_end,folder);     //VOICE SOUND
@@ -70,7 +72,7 @@ if(lightstate != HIGH){
     }
          if(!check){
          buttonstate = LOW; lightstate = HIGH;
-         while(!(millis()%2)){;}
+         digitalWrite(pin_cristal,HIGH);                    // CRISTAL ON
          Play_Folder_Track(folder,track_on);                //POWER UP SOUND 
          delay(time_on - fade_OffToOn(lightpower));         //FADE LIGHT
          Play_Folder_Track(folder,track_hum);
@@ -140,29 +142,33 @@ else{
         Flicker(lightpower);
 #endif
 
-// CRISTAL ON
-digitalWrite(pin_cristal,HIGH);
+//------------ SWING AND CLASH DETECTION VERSION ---------------
+         MPU_Get_Data(&AcX,&AcZ,&GyX,&GyZ);
 
-// SWING AND CLASH DETECTION
-         int16_t GyX=0,GyZ=0;
-         MPU_Get_Data(&GyX,&GyZ);
-         if((abs(GyX) > swingforce) || (abs(GyZ) > swingforce)){
+         if((AcX*AcX) + (AcZ*AcZ) > clash_force){
+            Play_Rand(track_clash_start,track_clash_end,folder);
+            delay(time_clash - clashFlash(lightpower));
+            Play_Folder_Track(folder,track_hum);
+            delay(70);
+            Loop_Current();}
+         
+         else if(((GyX*GyX) + (GyZ*GyZ)) > swing_force){
           time0 = millis();
           Play_Rand(track_swing_start,track_swing_end,folder);
-          
-          while((millis() - time0) < (time_swing - 8)){
-              int16_t NEW_GyX=0,NEW_GyZ=0;
-              MPU_Get_Data(&NEW_GyX,&NEW_GyZ);
-              if( (abs(NEW_GyX) > clashforce || abs(NEW_GyZ) > clashforce) && (((GyX ^ NEW_GyX) < 0) || ((GyZ ^ NEW_GyZ) < 0))){ 
-                Play_Rand(track_clash_start,track_clash_end,folder);
-                delay(time_clash);
-                break;
-              }
+          delay(70);   //min time for dfplayer serial
+          while((millis()-time0) < time_swing){
+          MPU_Get_Acc(&AcX,&AcZ);
+            if((AcX*AcX) + (AcZ*AcZ) > clash_force){
+            Play_Rand(track_clash_start,track_clash_end,folder);
+            delay(time_clash - clashFlash(lightpower));
+            break;
             }
-          Play_Folder_Track(folder,track_hum);
-          delay(150);
-          Loop_Current();
           }
+
+        Play_Folder_Track(folder,track_hum);
+        delay(70);
+        Loop_Current();
+        }
                 
    }
 //***************************** BUTTON 1 PRESSED LIGHT ON --> TURN OFF ************************************//
@@ -172,7 +178,7 @@ digitalWrite(pin_cristal,HIGH);
       time0 = millis();
       check = false;
       while(digitalRead(pin_button1) != LOW){                  //WHAITING FOR THE BUTTON TO BE RELEASED
-        if((millis()-time0) > 300){
+        if((millis()-time0) > 200){
           Play_Folder_Track(folder,track_lockup); delay(100);
           Loop_Current();
           while(digitalRead(pin_button1)!= LOW) LockUp(lightpower);

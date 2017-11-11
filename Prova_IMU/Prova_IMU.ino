@@ -1,7 +1,8 @@
 #include<Wire.h>
-#define force 28000
+#define gyro_force   750000000
+#define clash_force 1100000000
 #define MPU_addr 0x68
-int16_t AcX,AcY,AcZ,GyX,GyY,GyZ;
+int32_t AcX,AcY,AcZ,GyX,GyY,GyZ;
 bool c = false;
 
 void setup(){
@@ -10,7 +11,7 @@ void setup(){
   Wire.write(0x6B);  // PWR_MGMT_1 register
   Wire.write(0);     // set to zero (wakes up the MPU-6050)
   Wire.endTransmission(true);
-  Serial.begin(9600);
+  Serial.begin(19200);
 }
 
 void loop(){
@@ -26,17 +27,14 @@ void loop(){
   GyY=Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
   GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 
-  if((abs(GyX) > force) || (abs(GyZ) > force)){Serial.print("\n\n ------------------ CLASH GYRO-------------------\n "); c = true; }
-  if((abs(AcX) > force) || (abs(AcY) > force) || (abs(AcZ) > force)){ Serial.print("\n\n ------------------ CLASH ACC-------------------\n "); c = true;}
+  if(((GyX*GyX) + (GyZ*GyZ))  > gyro_force)  Serial.print("\n\n\t\t\tSWING GYRO  : ");Serial.print((GyX*GyX) + (GyZ*GyZ)); Serial.print("\t\t\t\n");
+  if((AcX*AcX) + (AcZ*AcZ))  > clash_force)  Serial.print("\n\n\t\t\tCLASH ACC   : ");Serial.print((AcX*AcX) + (AcZ*AcZ)); Serial.print("\t\t\t\n");
+   
   Serial.print("AcX= "); Serial.print(AcX);
   Serial.print(" | AcY= "); Serial.print(AcY);
   Serial.print(" | AcZ= "); Serial.print(AcZ);
   Serial.print(" | GyX= "); Serial.print(GyX);
   Serial.print(" | GyY= "); Serial.print(GyY);
   Serial.print(" | GyZ= "); Serial.println(GyZ);
-  if(c){
-  Serial.print("-----------------------------------------------\n\n\n");
-  c = false;
-  }
-  
+  delay(1);
 }

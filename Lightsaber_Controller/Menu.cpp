@@ -7,10 +7,10 @@
 void get_config(uint8_t* numfont,uint8_t* folder,uint8_t* volume,uint8_t* lightpower){
 if(EEPROM[0]!= 'C'){
      EEPROM[0] = 'C';
-     EEPROM[1] = 4;
-     EEPROM[2] = 1;
-     EEPROM[3] = 15; 
-     EEPROM[4] = 100;
+     EEPROM[1] = (*numfont);
+     EEPROM[2] = (*folder);
+     EEPROM[3] = (*volume); 
+     EEPROM[4] = (*lightpower);
      }
      
 else{
