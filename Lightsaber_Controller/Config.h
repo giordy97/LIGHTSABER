@@ -9,8 +9,8 @@
 //    ALL YOU ARE SETTING HERE WILL BE OVERWITTEN 
 //       BY CONFIG MENU AFTER FIRST START UP:    
 
-#define FN 1     //FONT ACTUALY  SELECTED
-#define FF 1     //NUMBER OF DIFFERENT FONTS ON YOUR SD CARD
+#define FF 1     //FONT ACTUALY  SELECTED
+#define FN 4     //NUMBER OF DIFFERENT FONTS ON YOUR SD CARD
 #define FV 20    //VOLUME: ONLY MULTIPLE OF 5 (0-30)
 #define FL 200   //LIGHTPOWER  (0-254)
 #define FK 0     //FLICKER EFFECT (1 -> YES || 0 -> NO)
@@ -35,6 +35,8 @@
 //TIME CRISTAL GOES LOW, HIGH, LOW.
 #define CristalPeriod 1500    //TIME IN MILLISECONDS
 
+#define flash_time     50     //TIME FLASH DURING CLASH
+
 //******************** TRACK NUMBERS: ***************
 #define track_on           1
 #define track_hum          2
@@ -53,7 +55,7 @@
 
 //**************** LENGHT AUDIO FILE ****************
 /* LENGHT IS USED TO CALCULATE DELAYS FOR ARDUINO */
-#define time_on            2125         //2145
+#define time_on            2120         //2145
 #define time_off           1400
 #define time_clash         665          //673
 #define time_swing         630          //650
@@ -68,9 +70,9 @@
 //***************************************************
 
 //******************** CONFIG FOR MPU6050 ***********
-#define MPU_addr            0x68
-#define swing_force     800000000  //FORCE TO DETECT SWING
-#define clash_force    1150000000  //FORCE TO DETECT CLASH
-#define rotation_force     24500   //FORCE TO SKIP IN MENU
-#define interval_clash 10
+#define MPU_addr         0x68
+#define swing_force      800000000   //FORCE TO DETECT SWING
+#define clash_force      1150000000  //FORCE TO DETECT CLASH
+#define rotation_force   24500       //FORCE TO SKIP IN MENU
+#define interval_clash   10
 

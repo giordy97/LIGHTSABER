@@ -2,14 +2,13 @@
 #include "Arduino.h"
 #include "Config.h"
 
-uint8_t fade_OffToOn(uint8_t lightpower){
+void fade_OffToOn(uint8_t lightpower){
     uint8_t cont = 0;
     while(cont < lightpower){
          analogWrite(pin_light,cont);
          delay(2);
          cont++;
       }
-  return (cont*2);
 }
 
 uint16_t fade_OnToOff(uint8_t lightpower){
@@ -32,22 +31,21 @@ void LockUp(uint8_t lightpower){
       delay (30);
   }
   
-void Flicker(uint8_t lightpower){
-    if(lightpower < 50) analogWrite(pin_light, random(1 ,lightpower + 50));
-    else if(lightpower > 205) analogWrite(pin_light, random(lightpower - 50 , 255 ));
-    else analogWrite(pin_light, random(lightpower - 50 , lightpower + 50 ));
-  }
+void Flicker_Effect(uint8_t lightpower){
+    if(lightpower < 50) analogWrite(pin_light, random(1 ,lightpower + 60));
+    else if(lightpower > 205) analogWrite(pin_light, random(lightpower - 60 , 255 ));
+    else analogWrite(pin_light, random(lightpower - 60 , lightpower + 60 ));
+   }
 
 void CristalPulse(){
     analogWrite(pin_cristal,((1 + cos((millis()*3.1415926535)/CristalPeriod))/2) * 255);
   }
 
 uint8_t clashFlash(uint8_t lightpower){
-  #define flash_time 30
    analogWrite(pin_light,1);
    delay(10);
    analogWrite(pin_light,255); 
    delay(flash_time); 
    analogWrite(pin_light,lightpower);
-   return flash_time + 10;
+   return 40;
   }
