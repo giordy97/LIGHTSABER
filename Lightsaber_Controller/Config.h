@@ -12,7 +12,7 @@
 #define FF 1     //FONT ACTUALY  SELECTED
 #define FN 4     //NUMBER OF DIFFERENT FONTS ON YOUR SD CARD
 #define FV 20    //VOLUME: ONLY MULTIPLE OF 5 (0-30)
-#define FL 200   //LIGHTPOWER  (0-254)
+#define FL 0     //LIGHTPOWER  (0-254)
 #define FK 0     //FLICKER EFFECT (1 -> YES || 0 -> NO)
 //============================================================
 
@@ -55,10 +55,10 @@
 
 //**************** LENGHT AUDIO FILE ****************
 /* LENGHT IS USED TO CALCULATE DELAYS FOR ARDUINO */
-#define time_on            2120         //2145
+#define time_on            2130         //2145
 #define time_off           1400
-#define time_clash         665          //673
-#define time_swing         630          //650
+#define time_clash         670          //673
+#define time_swing         640          //650
 //***************************************************
 
 //****************** BYTE FOR DFPLAYER: *************

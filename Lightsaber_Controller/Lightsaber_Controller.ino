@@ -181,6 +181,7 @@ if((flicker != 0) && (millis()%10))  Flicker_Effect(lightpower);
         Play_Folder_Track(folder,track_hum);
         delay(80);
         Loop_Current();
+        delay(80);
         }
                 
    }
