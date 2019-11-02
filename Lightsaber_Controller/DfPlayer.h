@@ -13,6 +13,7 @@ extern void Specify_Equalizer(uint8_t num);         // (0,1,2,3,4,5) (Normal/Pop
 extern void Specify_Source(uint8_t num);            // (0,1,2,3,4,5) (U/SD/AUX/SLEEP/FLASH)
 extern void Play_Folder_Track(uint8_t folder,uint8_t track);
 extern void Loop_Current();
+extern void Play_Loop(uint8_t folder,uint8_t track);
 extern void Dfplayer_Reset();
 
 //CUSTOM FUNCTIONS:

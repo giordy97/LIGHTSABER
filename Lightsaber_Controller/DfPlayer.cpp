@@ -31,6 +31,10 @@ void Loop_Current(){
   Send_CMD(0x19,0x00,0x00);
 }
 
+void Play_Loop(uint8_t folder,uint8_t track){
+  Send_CMD(0x08,folder,track);
+}
+
 void Dfplayer_Reset(){
   Send_CMD(0x0c,0x00,0x00);
 }
@@ -41,8 +45,9 @@ Serial.begin(9600);
 while(!Serial){;}
 
 //Reset Dfplayer
-Dfplayer_Reset();
-delay(2000);
+//Dfplayer_Reset();
+//delay(2000);
+delay(700);
 
 //Dfplayer Config:
 Specify_Equalizer(0x00);        delay(100);

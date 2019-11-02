@@ -5,36 +5,33 @@
 #include "Mpu6050.h"
 #include "Light.h"
 
-void get_config(uint8_t* numfont,uint8_t* folder,uint8_t* volume,uint8_t* lightpower,uint8_t* flicker){
+void get_config(uint8_t* folder,uint8_t* volume,uint8_t* lightpower,uint8_t* flicker){
 if(EEPROM[0]!= 'C'){
      EEPROM[0] = 'C';
-     EEPROM[1] = (*numfont);
-     EEPROM[2] = (*folder);
-     EEPROM[3] = (*volume); 
-     EEPROM[4] = (*lightpower);
-     EEPROM[5] = (*flicker);
+     EEPROM[1] = (*folder);
+     EEPROM[2] = (*volume); 
+     EEPROM[3] = (*lightpower);
+     EEPROM[4] = (*flicker);
      }
      
 else{
-     (*numfont) = EEPROM[1];
-     (*folder) = EEPROM[2];
-     (*volume) = EEPROM[3];
-     (*lightpower) = EEPROM[4];
-     (*flicker) = EEPROM[5];   
+     (*folder) = EEPROM[1];
+     (*volume) = EEPROM[2];
+     (*lightpower) = EEPROM[3];
+     (*flicker) = EEPROM[4];   
      }
 }
 
-void set_config(uint8_t numfont,uint8_t folder,uint8_t volume,uint8_t lightpower,uint8_t flicker){    
-     if (EEPROM[1] != numfont) EEPROM[1] = numfont;
-     if (EEPROM[2] != folder) EEPROM[2] = folder;
-     if (EEPROM[3] != volume) EEPROM[3] = volume; 
-     if (EEPROM[4] != lightpower) EEPROM[4] = lightpower;
-     if (EEPROM[5] != flicker) EEPROM[5] = flicker;
+void set_config(uint8_t folder,uint8_t volume,uint8_t lightpower,uint8_t flicker){    
+     if (EEPROM[1] != folder) EEPROM[1] = folder;
+     if (EEPROM[2] != volume) EEPROM[2] = volume; 
+     if (EEPROM[3] != lightpower) EEPROM[3] = lightpower;
+     if (EEPROM[4] != flicker) EEPROM[4] = flicker;
    }
 
 //_____________________________________MENU___________________________________________
 
-void menu(uint8_t* numfont,uint8_t* folder,uint8_t* volume,uint8_t* lightpower,uint8_t* flicker){
+void menu(uint8_t* folder,uint8_t* volume,uint8_t* lightpower,uint8_t* flicker){
      int16_t GyY = 0;
      digitalWrite(pin_cristal,HIGH); //TURN ON CRISTAL
 //-----------------------SELECT VOLUME-----------------------
@@ -65,7 +62,7 @@ void menu(uint8_t* numfont,uint8_t* folder,uint8_t* volume,uint8_t* lightpower,u
      digitalWrite(pin_light,LOW);            // TURN OFF LIGHT
 //-----------------------SELECT FLICKER EFFECT-----------------------
 
-     Play_Folder_Track(99,33); delay(1400);
+     Play_Folder_Track(99,34); delay(1400);
      analogWrite(pin_light,(*lightpower));
      
      while(!digitalRead(pin_button1)){
@@ -77,19 +74,19 @@ void menu(uint8_t* numfont,uint8_t* folder,uint8_t* volume,uint8_t* lightpower,u
      digitalWrite(pin_light,LOW);            // TURN OFF LIGHT
     
 //-----------------------SELECT FONT-----------------------
-     Play_Folder_Track(99,34); delay(1300);  //SELECT FONT SOUND
+     Play_Folder_Track(99,35); delay(1300);  //SELECT FONT SOUND
      while(!digitalRead(pin_button1)){
        Play_Folder_Track((*folder),track_bootup); delay(400);
        do{
         if(digitalRead(pin_button1)) break;
         MPU_Get_Rotation(&GyY);
-        if((GyY > rotation_force) && ((*folder) != (*numfont))) (*folder)+=1;
-        else if((GyY < -rotation_force) && ((*folder) != 1)) (*folder)-=1;
+        if((GyY > rotation_force) && ((*folder) < FN)) (*folder)+=1;
+        else if((GyY < -rotation_force) && ((*folder) > 1)) (*folder)-=1;
         }while(rotation_force > abs(GyY));
      }
 //-----------------------PUTTING CONFIG ON EEPROM-----------------------
-Play_Folder_Track(99,35);   //SAVING 
-set_config((*numfont),(*folder),(*volume),(*lightpower),(*flicker));
+Play_Folder_Track(99,36);   //SAVING 
+set_config((*folder),(*volume),(*lightpower),(*flicker));
 delay(9000); 
 if((*volume)==0)Specify_Volume(0);
 }

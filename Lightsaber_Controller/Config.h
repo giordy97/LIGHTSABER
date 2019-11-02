@@ -10,9 +10,9 @@
 //       BY CONFIG MENU AFTER FIRST START UP:    
 
 #define FF 1     //FONT ACTUALY  SELECTED
-#define FN 4     //NUMBER OF DIFFERENT FONTS ON YOUR SD CARD
-#define FV 20    //VOLUME: ONLY MULTIPLE OF 5 (0-30)
-#define FL 0     //LIGHTPOWER  (0-254)
+#define FN 5     //NUMBER OF DIFFERENT FONTS ON YOUR SD CARD
+#define FV 10    //VOLUME: ONLY MULTIPLE OF 5 (0-30)
+#define FL 100     //LIGHTPOWER  (0-254)
 #define FK 0     //FLICKER EFFECT (1 -> YES || 0 -> NO)
 //============================================================
 
@@ -33,9 +33,11 @@
 
 //CRISTAL PERIOD
 //TIME CRISTAL GOES LOW, HIGH, LOW.
-#define CristalPeriod 1500    //TIME IN MILLISECONDS
-
-#define flash_time     50     //TIME FLASH DURING CLASH
+#define CristalPeriod 1200    //TIME IN MILLISECONDS
+#define flash_time     60     //TIME FLASH DURING CLASH
+#define open_menu_time 400    //TIME WHILE BUTTON NEED TO BE PRESSED TO ENTER MENU
+#define double_click_time 250 //TIME TO DETECT AN EFFETTIVE DOUBLE CLICK
+#define lockup_time 200       //TIME TO START LOCKUP EFFECT
 
 //******************** TRACK NUMBERS: ***************
 #define track_on           1
@@ -55,10 +57,11 @@
 
 //**************** LENGHT AUDIO FILE ****************
 /* LENGHT IS USED TO CALCULATE DELAYS FOR ARDUINO */
-#define time_on            2130         //2145
-#define time_off           1400
-#define time_clash         670          //673
-#define time_swing         640          //650
+#define time_on            21690
+#define time_off           1650
+#define time_clash         19320
+#define time_swing         613
+#define time_swing_long    19270
 //***************************************************
 
 //****************** BYTE FOR DFPLAYER: *************
@@ -71,8 +74,7 @@
 
 //******************** CONFIG FOR MPU6050 ***********
 #define MPU_addr         0x68
-#define swing_force      800000000   //FORCE TO DETECT SWING
-#define clash_force      1150000000  //FORCE TO DETECT CLASH
-#define rotation_force   24500       //FORCE TO SKIP IN MENU
+#define swing_force      820000000   //ROTATION FORCE TO DETECT SWING
+#define clash_force      1120000000  //LINEAR FORCE TO DETECT CLASH
+#define rotation_force   24000       //ROTATION FORCE TO SKIP IN MENU
 #define interval_clash   10
-

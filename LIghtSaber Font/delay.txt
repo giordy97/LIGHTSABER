@@ -1,0 +1,40 @@
+KYLO:
+power on - 28271
+power off - 576
+hum - 26126
+clash - 26799
+swing - 550
+swing long - 26776
+-------------------------
+LUKE:
+power on - 115341
+power off - 1111
+hum - 113197
+clash - 113870
+swing - 649
+swing long - 113847
+-------------------------
+VADER:
+power on - 13596
+power off - 1265
+hum - 11451
+clash - 12124
+swing - 650
+swing long - 12101
+-------------------------
+INQUISITOR:
+power on - 13164
+power off - 1200
+hum - 11019
+clash - 11692
+swing - 500
+swing long - 11669
+-------------------------
+ANCIENT SABER:
+power on - 21690
+power off - 1650
+hum - 18690
+clash - 19320
+swing - 613
+swing long - 19270
+-------------------------

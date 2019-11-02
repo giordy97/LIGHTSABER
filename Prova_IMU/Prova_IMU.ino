@@ -11,7 +11,7 @@ void setup(){
   Wire.write(0x6B);  // PWR_MGMT_1 register
   Wire.write(0);     // set to zero (wakes up the MPU-6050)
   Wire.endTransmission(true);
-  Serial.begin(19200);
+  Serial.begin(9600);
 }
 
 void loop(){
@@ -27,8 +27,9 @@ void loop(){
   GyY=Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
   GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 
-  if(((GyX*GyX) + (GyZ*GyZ))  > gyro_force)  Serial.print("\n\n\t\t\tSWING GYRO  : ");Serial.print((GyX*GyX) + (GyZ*GyZ)); Serial.print("\t\t\t\n");
-  if((AcX*AcX) + (AcZ*AcZ))  > clash_force)  Serial.print("\n\n\t\t\tCLASH ACC   : ");Serial.print((AcX*AcX) + (AcZ*AcZ)); Serial.print("\t\t\t\n");
+  if(((GyX*GyX) + (GyZ*GyZ))  > gyro_force) Serial.print("\n\n\t\t\tSWING GYRO  : ");Serial.print((GyX*GyX) + (GyZ*GyZ)); Serial.print("\t\t\t\n");
+  
+  if(((AcX*AcX) + (AcZ*AcZ))  > clash_force) Serial.print("\n\n\t\t\tCLASH ACC   : ");Serial.print((AcX*AcX) + (AcZ*AcZ)); Serial.print("\t\t\t\n");
    
   Serial.print("AcX= "); Serial.print(AcX);
   Serial.print(" | AcY= "); Serial.print(AcY);
