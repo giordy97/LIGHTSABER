@@ -1,5 +1,4 @@
 #include "DfPlayer.h"
-#include "Config.h"
 //0x17 loop folder parameter 1-255
 
 void Send_CMD(uint8_t CMD, uint8_t Par1, uint8_t Par2){

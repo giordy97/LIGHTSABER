@@ -1,6 +1,4 @@
 #include "Light.h"
-#include "Arduino.h"
-#include "Config.h"
 
 void fade_OffToOn(uint8_t lightpower){
     uint8_t cont = 0;

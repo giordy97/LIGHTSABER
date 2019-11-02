@@ -19,9 +19,11 @@ uint8_t folder = FF, volume = FV, lightpower = FL, flicker = FK;
 //TIMER VARIABLE
 uint32_t time0 = 0, delayToHum = 0;
 
+delays actual_delays;
+
 void setup() {
   //READING FROM EEPROM ACTUAL CONFIG
-  get_config(&folder, &volume, &lightpower, &flicker);
+  get_config(&folder, &volume, &lightpower, &flicker, &actual_delays);
 
   //INIZIALIZING DFPLAYER
   init_DfPlayer(volume);
@@ -63,7 +65,7 @@ void loop() {
             ; //WHAITING FOR THE BUTTON TO BE RELEASED BEFORE ENTER THE MENU
           }
           menu(&folder, &volume, &lightpower, &flicker);   //MENU
-          get_config(&folder, &volume, &lightpower, &flicker); //SAVE SETTINGS ON EEPROM
+          get_config(&folder, &volume, &lightpower, &flicker, &actual_delays); //SAVE SETTINGS ON EEPROM
           doubleClickCheck = true;
           buttonstate = LOW;
           lightstate = LOW;
@@ -90,7 +92,7 @@ void loop() {
           time0 = millis();                                  //FADE LIGHT
           buttonstate = LOW; lightstate = HIGH;              //SETTING STATE VARIABLE
           digitalWrite(pin_cristal, HIGH);                   // CRISTAL ON
-          delayToHum = time_on;                              //SET DELAY TO HUM AS TIME TO POWER ON TRACK
+          delayToHum = actual_delays.time_on;                              //SET DELAY TO HUM AS TIME TO POWER ON TRACK
           fade_OffToOn(lightpower);                          //LIGHT UP SABER
         }
       }
@@ -105,7 +107,7 @@ void loop() {
           Play_Track(track_on);                     //POWER UP SOUND
           buttonstate = LOW;
           lightstate = HIGH;
-          delay(time_on - fade_OffToOn(lightpower));          //FADE LIGHT
+          delay(actual_delays.time_on - fade_OffToOn(lightpower));          //FADE LIGHT
           Repeat_Track(track_hum);
 
         // BUTTON 2 PRESSED
@@ -138,7 +140,7 @@ void loop() {
     if (buttonstate != HIGH) {
 
       // CHECK SWING SOUND IS ENDED
-      if (swinging && (millis() - time0) > time_swing)
+      if (swinging && (millis() - time0) > actual_delays.time_swing)
         swinging = false;
 
       // CHECK OTHER SOUNDS ARE ENDED AND RESTART HUM
@@ -175,7 +177,7 @@ void loop() {
       if (((AcX * AcX) + (AcZ * AcZ) > clash_force) && (((GyX * GyX) + (GyZ * GyZ)) < (700000000))) {
         Play_Rand(track_clash_start, track_clash_end, folder);
         time0 = millis();
-        delayToHum = time_clash;
+        delayToHum = actual_delays.time_clash;
         humPlaying = false;
         clashFlash(lightpower); //DELAY IS IN THIS FUNCTION
       }
@@ -184,7 +186,7 @@ void loop() {
       else if (!swinging && (((GyX * GyX) + (GyZ * GyZ)) > swing_force)) {
         Play_Rand(track_swing_start, track_swing_end, folder);
         time0 = millis();
-        delayToHum = time_swing_long;
+        delayToHum = actual_delays.time_swing_long;
         humPlaying = false;
         delay(100);   //LITTLE DELAY AFTER PLAY SOUND FOR DFPLAYER
       }
@@ -216,7 +218,7 @@ void loop() {
         buttonstate = LOW; lightstate = LOW;
         humPlaying = false, swinging = false;
         Play_Folder_Track(folder, track_off);
-        delay(time_off - fade_OnToOff(lightpower));
+        delay(actual_delays.time_off - fade_OnToOff(lightpower));
       }
 #endif
       //--------------------------------------------------------------------------------------
@@ -228,7 +230,7 @@ void loop() {
              buttonstate = LOW;
              lightstate = LOW;
              Play_Track(track_off);
-             delay(time_off - fade_OnToOff(lightpower));
+             delay(actual_delays.time_off - fade_OnToOff(lightpower));
         #endif
         //--------------------------------------------------------------------------------------*/
     }//BUTTON PRESSED

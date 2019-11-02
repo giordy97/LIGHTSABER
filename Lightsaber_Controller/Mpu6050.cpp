@@ -1,6 +1,4 @@
 #include "Mpu6050.h"
-#include "Config.h"
-#include <Wire.h>
 
 void init_mpu6050(){
   Wire.begin();
@@ -44,4 +42,3 @@ void MPU_Get_Rotation(int16_t* GyY){
   Wire.requestFrom(MPU_addr,2,true);                        // request a total of 2 registers  
   (*GyY) = Wire.read()<<8|Wire.read();                      // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
 }
-

@@ -1,10 +1,7 @@
-/*
-  SIMPLE DFPLAYER LIBRARY TO USE DFPLAYER IN A LIGHTSABER
-  WRITTEN BY: GIORDANO COSTI
-*/
-#include <Arduino.h>
 #ifndef DFPLAYER_H
 #define DFPLAYER_H
+#include <Arduino.h>
+#include "Config.h"
 
 //STANDARD FUNCTIONS:
 extern void Send_CMD(uint8_t CMD, uint8_t Par1, uint8_t Par2);

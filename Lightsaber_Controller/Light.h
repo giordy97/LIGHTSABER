@@ -1,6 +1,7 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 #include <Arduino.h>
+#include "Config.h"
 
 extern void fade_OffToOn(uint8_t lightpower);
 extern uint16_t fade_OnToOff(uint8_t lightpower);

@@ -1,3 +1,6 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
 // ====================================================================================
 // ===                            CONFIGURE YOUR SABER                              ===
 // ====================================================================================
@@ -57,13 +60,46 @@
 
 //**************** LENGHT AUDIO FILE ****************
 /* LENGHT IS USED TO CALCULATE DELAYS FOR ARDUINO */
-#define time_on            21690
-#define time_off           1650
-#define time_clash         19320
-#define time_swing         613
-#define time_swing_long    19270
-//***************************************************
+//Luke
+#define time_on_1            64000
+#define time_off_1           1111
+#define time_clash_1         64000
+#define time_swing_1         613
+#define time_swing_long_1    64000
+//Kylo
+#define time_on_2            28271
+#define time_off_2           576
+#define time_clash_2         26799
+#define time_swing_2         550
+#define time_swing_long_2    26776
+//Ancien weapon
+#define time_on_3            21690
+#define time_off_3           1650
+#define time_clash_3         19320
+#define time_swing_3         613
+#define time_swing_long_3    19270
+//Vader
+#define time_on_4            13596
+#define time_off_4           1265
+#define time_clash_4         12124
+#define time_swing_4         650
+#define time_swing_long_4    12101
+//Inquisitor
+#define time_on_5            13164
+#define time_off_5           1200
+#define time_clash_5         11692
+#define time_swing_5         599
+#define time_swing_long_5    11669
 
+//***************************************************
+struct delays{
+  uint16_t time_on;
+  uint16_t time_off;
+  uint16_t time_clash;
+  uint16_t time_swing;
+  uint16_t time_swing_long;
+  };
+  
 //****************** BYTE FOR DFPLAYER: *************
 #define Version_Byte      0xFF
 #define Command_Length    0x06
@@ -78,3 +114,5 @@
 #define clash_force      1120000000  //LINEAR FORCE TO DETECT CLASH
 #define rotation_force   24000       //ROTATION FORCE TO SKIP IN MENU
 #define interval_clash   10
+
+#endif
